@@ -8,18 +8,22 @@
 			INSERT INTO orders(order_id, user_id, order_date)
 			VALUES (#{order_id}, #{user_id}, #{order_date})
 		</insert>
-	<!-- 주문서 상세 작성-->
+	<!-- 주문서 완료페이지 작성-->
 		<insert id="insertOrder_Complete" parameterType="com.choongang.shoppingmall.vo.Order_CompleteVO">
 			INSERT INTO orders(order_complete_id, order_id, product_id, quantity, total_price)
 			VALUES (#{order_complete_id}, #{order_id}, #{product_id}, #{quantity}, #{total_price})
 		</insert>
-	<!-- 주문 조회 -->
-		<select id="selectOrders" parameterType="com.choongang.shoppingmall.vo.OrdersVO">
-			SELECT order_id, user_id, order_date 
-			FROM orders
-			WHERE order_id = #{order_id}
+	<!-- 모든 주문 조회 --> 
+		<select id="selectAllOrders" resultType="com.choongang.shoppingmall.vo.OrdersVO">
+			SELECT * FROM orders
 		</select>
-		
+	<!-- 주문 ID로 주문 조회-->
+		<select id="selectOrderById" parameterType="int" resultType="com.choongang.shoppingmall.vo.OrdersVO">
+			SELECT * FROM 
+				orders 
+			WHERE
+				order_id = #{orderid}
+		</select>
 		
 </mapper>
 

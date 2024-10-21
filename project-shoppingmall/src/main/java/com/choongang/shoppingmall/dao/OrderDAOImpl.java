@@ -1,6 +1,7 @@
 package com.choongang.shoppingmall.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
+	
+	private static final String NAMESPACE = "com.choongang.shoppingmall.mappers.OrderMapper";
 
 	// 주문서 작성 / 배송지 / 요청사항
 	@Override
@@ -62,4 +65,10 @@ public class OrderDAOImpl implements OrderDAO {
 		return sqlSession.selectOne("com.choongang.shoppingmall.dao.OrdersDAO.selectOrderById", orderId);
 	}
 
+	@Override
+	public List<OrdersVO> selectAllOrders() throws SQLException {
+		return sqlSession.selectList(NAMESPACE + ".selectAllOrders"); 
+				
+	}
+	
 }

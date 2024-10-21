@@ -47,9 +47,21 @@ public class OrderServiceImpl implements OrderService{
 		log.info("주문서 조회 완료 : {} ", ordersVO);
 		return ordersVO;
 	}
+	
+	// 모든 주문 목록 조회
 	@Override
+	public List<OrdersVO> getAllOrders() throws SQLException {
+		log.info("모든 주문 목록 조회 시작");
+		List<OrdersVO> orderList = orderDAO.selectAllOrders(); // DAO 를 통해 모든 주문 목록조회
+		log.info("모든 주문 목록 조회 완료 : {}", orderList);
+		return orderList;
+		
+	}
+	
+	@Override	
 	public List<Order_CompleteVO> getOrderCompleteByOrderId(int orderId) {
-
+		log.info("주문 완료 정보 조회 시작: {}" , orderId);
+		//
 		return null;
 	}
 	

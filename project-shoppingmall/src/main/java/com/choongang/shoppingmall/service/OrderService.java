@@ -20,8 +20,10 @@ public interface OrderService {
 	// 주문 조회
 	OrdersVO getOrderByid(int orderid) throws SQLException;
 
+	// 모든 주문 목록 조회
+	List<OrdersVO> getAllOrders() throws SQLException;
+	
 	List<Order_CompleteVO> getOrderCompleteByOrderId(int orderId);
-
 
 
 	

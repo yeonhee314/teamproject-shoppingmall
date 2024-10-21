@@ -20,7 +20,7 @@
         }
         h1 {
             text-align: center;
-            font-weight: 400;
+            font-weight: 350;
             font-size: 36px;
         }
         .navigation {
@@ -125,7 +125,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="item : ${cartItems}">
+                    <tr th:each="item : ${orders}">
 				  <!--  <td th:text="${item.product_name}"></td> 사진 변수명 확인후 기입 -->                         
                         <td th:text="${item.product_name}"></td>
                         <td th:text="${item.cart_count}"></td>

@@ -1,6 +1,7 @@
 package com.choongang.shoppingmall.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,8 @@ public interface OrderDAO {
 
 	// 주문 조회
 	OrdersVO selectOrderById(int orderId) throws SQLException;
+	
+	// 모든 주문 목록 조회
+	List<OrdersVO> selectAllOrders() throws SQLException;
 	
 }

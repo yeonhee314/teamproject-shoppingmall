@@ -5,6 +5,107 @@
 <title>주문 완료</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* styles.css */
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f5f5f5;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 800px;
+	margin: 50px auto;
+	padding: 20px;
+	background-color: white;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+}
+
+h1 {
+	font-size: 2.5em;
+	color: #333;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+h2 {
+	font-size: 1.5em;
+	color: #666;
+	margin-top: 30px;
+	border-bottom: 2px solid #eee;
+	padding-bottom: 10px;
+}
+
+p {
+	font-size: 1.2em;
+	line-height: 1.6;
+	color: #555;
+}
+
+strong {
+	font-weight: bold;
+	color: #333;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+.table th, .table td {
+	padding: 10px;
+	text-align: left;
+	border: 1px solid #ddd;
+}
+
+.table th {
+	background-color: #f9f9f9;
+	font-weight: bold;
+}
+
+.table img {
+	max-width: 80px;
+	height: auto;
+}
+
+.btn {
+	display: inline-block;
+	padding: 10px 20px;
+	font-size: 1.2em;
+	text-align: center;
+	color: white;
+	background-color: #007bff;
+	border-radius: 5px;
+	text-decoration: none;
+	margin-top: 30px;
+}
+
+.btn:hover {
+	background-color: #0056b3;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 15px;
+	}
+	h1 {
+		font-size: 2em;
+	}
+	h2 {
+		font-size: 1.3em;
+	}
+	.table img {
+		max-width: 60px;
+	}
+	.btn {
+		font-size: 1em;
+	}
+}
+</style>
 </head>
 
 <body>
@@ -52,19 +153,19 @@
 					<td>150원</td>
 				</tr>
 			</tbody>
-			
-			
-			
+
+
+
 		</table>
 
 		<h2>결제 수단</h2>
 		<p>
-			<strong>결제 수단:</strong> <span>${order.payMent}</span><br>
-			<strong>상품 금액:</strong> <span>${order.totalPrice}원</span><br> <strong>총
-				결제 금액:</strong> <span>${order.totalPrice}원</span>
+			<strong>결제 수단:</strong> <span>${order.payMent}</span><br> <strong>상품
+				금액:</strong> <span>${order.totalPrice}원</span><br> <strong>총 결제
+				금액:</strong> <span>${order.totalPrice}원</span>
 		</p>
 
-		<a href="/" class="btn btn-primary">홈으로 돌아가기</a>
+		<a href="/index.html" class="btn btn-primary">홈으로 돌아가기</a>
 	</div>
 </body>
 
