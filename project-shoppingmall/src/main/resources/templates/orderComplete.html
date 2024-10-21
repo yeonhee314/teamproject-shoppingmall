@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -5,11 +6,11 @@
 <title>주문 완료</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="styles.css">
+</head>
 <style>
-/* styles.css */
 body {
 	font-family: Arial, sans-serif;
-	background-color: #f5f5f5;
+	background-color: #f9f9f9;
 	margin: 0;
 	padding: 0;
 }
@@ -18,9 +19,9 @@ body {
 	max-width: 800px;
 	margin: 50px auto;
 	padding: 20px;
-	background-color: white;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	border-radius: 10px;
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
@@ -30,84 +31,85 @@ h1 {
 	margin-bottom: 20px;
 }
 
-h2 {
-	font-size: 1.5em;
-	color: #666;
-	margin-top: 30px;
-	border-bottom: 2px solid #eee;
-	padding-bottom: 10px;
-}
-
-p {
-	font-size: 1.2em;
-	line-height: 1.6;
-	color: #555;
-}
-
-strong {
-	font-weight: bold;
-	color: #333;
-}
-
-.table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 20px;
-}
-
-.table th, .table td {
-	padding: 10px;
-	text-align: left;
+.order-details {
 	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 15px;
+	margin-bottom: 20px;
+	background-color: #f7f7f7;
 }
 
-.table th {
-	background-color: #f9f9f9;
-	font-weight: bold;
+.order-details h2 {
+	font-size: 1.8em;
+	color: #555;
+	margin-bottom: 10px;
 }
 
-.table img {
-	max-width: 80px;
-	height: auto;
+.order-details p {
+	margin: 5px 0;
+	font-size: 1.1em;
+	color: #666;
+}
+
+.footer {
+	text-align: center;
+	margin-top: 20px;
+	font-size: 1.2em;
+	color: #999;
 }
 
 .btn {
 	display: inline-block;
 	padding: 10px 20px;
-	font-size: 1.2em;
-	text-align: center;
-	color: white;
-	background-color: #007bff;
-	border-radius: 5px;
+	background-color: #007BFF;
+	color: #fff;
 	text-decoration: none;
-	margin-top: 30px;
+	border-radius: 5px;
+	margin: 10px 0;
+	transition: background-color 0.3s ease;
 }
 
 .btn:hover {
 	background-color: #0056b3;
 }
 
-/* 반응형 디자인 */
-@media screen and (max-width: 768px) {
-	.container {
-		padding: 15px;
-	}
-	h1 {
-		font-size: 2em;
-	}
-	h2 {
-		font-size: 1.3em;
-	}
-	.table img {
-		max-width: 60px;
-	}
-	.btn {
-		font-size: 1em;
-	}
+table {
+	width: 100%;
+	border-collapse: separate; /* 테이블 셀 간격 유지 */
+	border-spacing: 15px; 
+	margin-bottom: 20px; /* 테이블 아래 여백 */
+}
+
+th, td {
+	padding: 10px; /* 셀 내부 여백을 동일하게 설정 */
+	text-align: center; /* 텍스트 중앙 정렬 */
+	vertical-align: middle; /* 모든 셀 내용을 수직 중앙 정렬 */
+}
+
+th {
+	font-weight: bold; /* 굵은 글씨  */
+	font-size: 1em;
+	color: #333; 
+}
+
+td img {
+	max-width: 80px; /* 이미지 크기를 줄여 공간 확보 */
+	height: auto;
+	display: block;
+	margin: 0 auto; /* 이미지를 중앙으로 정렬 */
+}
+
+tbody tr td {
+	vertical-align: middle; /* 셀 내용 수직 중앙 정렬 */
+	text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+/* 상품명과 가격의 간격을 더 균일하게 하기 위해 텍스트 정렬 */
+.product-name, .product-price {
+	padding-left: 10px;
+	padding-right: 10px;
 }
 </style>
-</head>
-
 <body>
 	<div class="container">
 		<h1>주문이 완료되었습니다.</h1>
@@ -117,9 +119,8 @@ strong {
 			<strong>받는 사람:</strong> <span th:if="${user != null}"
 				th:text="${user.name}">이름 없음</span><br> <strong>주소:</strong> <span
 				th:if="${user != null}" th:text="${user.addr}">주소 없음</span><br>
-			<strong>상품 금액:</strong> <span th:if="${order != null}"
-				th:text="${order.totalPrice} + '원'">금액 없음</span><br>
-
+			<strong>상품 금액:</strong> <span th:if="${product != null}"
+				th:text="${product.totalPrice} + '원'">금액 없음</span><br>
 		</p>
 
 		<h2>주문 상품</h2>
@@ -135,38 +136,38 @@ strong {
 			</thead>
 			<tbody>
 				<tr>
-					<!-- 여기에서 items 리스트를 순회하여 출력합니다 -->
-					<!-- 예시로 2개의 상품을 하드코딩한 것입니다. 실제 데이터로 대체하세요. -->
-					<td><img src="path/to/image1.jpg" alt="상품 썸네일"
-						style="max-width: 100px; height: auto;"></td>
-					<td>상품1</td>
-					<td>옵션1</td>
-					<td>2</td>
-					<td>100원</td>
+					<td><img src="src/main/resources/static/images/banner-01.jpg"
+						alt="상품 사진"></td>
+					<td th:if="${product != null}" th:text="${product.product_name}"></td>
+					<td th:if="${product != null}" th:text="${product.product_option}"></td>
+					<td th:if="${cart != null}" th:text="${cart.cart_count}"></td>
+					<td th:if="${product != null}"
+						th:text="${product.totalPrice} + '원'"></td>
 				</tr>
+				<!-- 예비용 
 				<tr>
-					<td><img src="path/to/image2.jpg" alt="상품 썸네일"
-						style="max-width: 100px; height: auto;"></td>
+					<td><img src="path/to/image2.jpg" alt="상품 썸네일"></td>
 					<td>상품2</td>
 					<td>옵션2</td>
 					<td>1</td>
-					<td>150원</td>
+					<td>10000원</td>
+				-->
 				</tr>
 			</tbody>
-
-
-
 		</table>
+
 
 		<h2>결제 수단</h2>
 		<p>
-			<strong>결제 수단:</strong> <span>${order.payMent}</span><br> <strong>상품
-				금액:</strong> <span>${order.totalPrice}원</span><br> <strong>총 결제
-				금액:</strong> <span>${order.totalPrice}원</span>
+			<strong>결제 수단:</strong> <span th:if="${orders != payMent}"
+				th:text="${orders.payMent}"></span><br> <strong>상품 금액:</strong>
+			<span th:if="${product != totalPrice}"
+				th:text="${product.totalPrice} + '원'"></span><br> <strong>총
+				결제 금액:</strong> <span th:if="${cart != cart_price}"
+				th:text="${cart.cart_price} + '원'"></span>
 		</p>
 
-		<a href="/index.html" class="btn btn-primary">홈으로 돌아가기</a>
+		<a href="/" class="btn btn-primary">홈으로 돌아가기</a>
 	</div>
 </body>
-
 </html>
