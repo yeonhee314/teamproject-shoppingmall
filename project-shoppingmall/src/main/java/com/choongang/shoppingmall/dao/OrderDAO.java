@@ -23,5 +23,8 @@ public interface OrderDAO {
 	
 	// 모든 주문 목록 조회
 	List<OrdersVO> selectAllOrders() throws SQLException;
+
+	// 모든 주문 상세 조회
+	List<Order_CompleteVO> selectOrderCompleteByOrderId(int orderId) throws SQLException;
 	
 }

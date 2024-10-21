@@ -3,19 +3,21 @@ package com.choongang.shoppingmall.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.choongang.shoppingmall.service.OrderService;
+import com.choongang.shoppingmall.vo.CartVO;
 import com.choongang.shoppingmall.vo.Order_CompleteVO;
 import com.choongang.shoppingmall.vo.OrdersVO;
+import com.choongang.shoppingmall.vo.ProductVO;
 import com.choongang.shoppingmall.vo.UserVO;
 
-@RestController
-@RequestMapping("templates/orderComplete") // 기본 URL
+@Controller
+@RequestMapping("orderComplete") // 기본 URL
 public class OrderCompleteController {
 
     @Autowired
@@ -25,22 +27,29 @@ public class OrderCompleteController {
     @GetMapping("templates/orderComplete")
     public String showOrderCompletePage(@RequestParam int orderId, Model model) {
         try {
-            List<Order_CompleteVO> items = orderService.getOrderCompleteByOrderId(orderId);
-            OrdersVO order = orderService.getOrderByid(orderId);
+            List<Order_CompleteVO> orderCompleteList = orderService.getOrderCompleteByOrderId(orderId);
+            OrdersVO orders = orderService.getOrderByid(orderId);
             
             // 사용자 정보 임시 객체
             UserVO user = new UserVO();
-            user.setName("홍길동");
-            user.setPhone("010-1234-5678");
             
-            model.addAttribute("order", order);
+            CartVO cart = new CartVO();
+            
+            ProductVO product = new ProductVO();
+            
+            model.addAttribute("orders", orders);
             model.addAttribute("user", user);
-            model.addAttribute("items", items); // items를 모델에 추가
+            model.addAttribute("cart", cart); 
+            model.addAttribute("product", product); // items를 모델에 추가
+            model.addAttribute("orderCompleteList",orderCompleteList);
             
             return "orderComplete"; // orderComplete.html을 반환
         } catch (Exception e) {
             e.printStackTrace();
             return "error"; // 에러 페이지 반환
         }
+        
     }
+    
 }
+

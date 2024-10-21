@@ -109,6 +109,23 @@ tbody tr td {
 	padding-left: 10px;
 	padding-right: 10px;
 }
+.btn {
+    display: block; /* 인라인 요소를 블록 요소로 변경 */
+    width: 200px; /* 버튼의 너비 설정 */
+    margin: 20px auto; /* 상하 20px, 좌우 자동으로 중앙 정렬 */
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    text-align: center; /* 텍스트 중앙 정렬 */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
 </style>
 <body>
 	<div class="container">
@@ -151,8 +168,8 @@ tbody tr td {
 					<td>옵션2</td>
 					<td>1</td>
 					<td>10000원</td>
-				-->
 				</tr>
+				-->
 			</tbody>
 		</table>
 
@@ -167,7 +184,7 @@ tbody tr td {
 				th:text="${cart.cart_price} + '원'"></span>
 		</p>
 
-		<a href="/" class="btn btn-primary">홈으로 돌아가기</a>
+		<a href="/index.html" class="btn btn-primary">홈으로 돌아가기</a>
 	</div>
 </body>
 </html>

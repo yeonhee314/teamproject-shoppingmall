@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.choongang.shoppingmall.service.OrderService;
@@ -48,7 +49,7 @@ public class OrderController {
 			ordercomplete.setQuantity(ordersVO.getCount()); // 수량 설정
 			ordercomplete.setTotal_price(ordersVO.getPrice()); // 총 가격 설정
 
-			orderService.createOrder_Complete(ordercomplete); // 주문완료 페이지 저장
+			orderService.createOrderComplete(ordercomplete); // 주문완료 페이지 저장
 
 			log.info("주문서 작성 요청 성공: {}", ordersVO); // 성공 로그
 			return new ResponseEntity<>("주문서 작성 성공", HttpStatus.CREATED);
@@ -78,30 +79,30 @@ public class OrderController {
 	}
 
 	@GetMapping("/orders.html")
-	public String showOrderPage(Model model) {
+	public String showOrderPage(@RequestParam int orderId, Model model) throws SQLException {
 		log.info("주문 페이지 요청"); // 주문 페이지 요청 로그 추가
-
+		List<Order_CompleteVO> orderComleteList = orderService.getOrderCompleteByOrderId(orderId);
+		model.addAttribute("orderComleteList", orderComleteList); // 배송지 추가
 		try {
-
 			// 현재 인증된 사용자의 정보를 가져옴
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 			if (authentication != null && authentication.isAuthenticated()) {
 				String username = authentication.getName(); // 사용자 이름 가져오기
-				// 추가적인 사용자 정보가 필요하면 Authentication 객체를 캐스팅하여 가져올수있음
-				model.addAttribute("username", username); // 모델에 사용자 이름추가
+				model.addAttribute("username", username);
 			} else {
 				log.warn("인증되지 않은 사용자"); // 인증되지 않은 사용자 처리
 			}
-
+			
 			// 주문 목록을 서비스에서 가져옴
-			List<OrdersVO> ordersList = orderService.getAllOrders();
-			model.addAttribute("orders", ordersList); // Model 에 주문 목록 추가
-
+			List<OrdersVO> orderList = orderService.getAllOrders();
+			model.addAttribute("orders",orderList); // model 주문 목록 추가
+			
+			
 		} catch (SQLException e) {
 			log.error("주문 목록 조회 실패 {}", e.getMessage()); // 오류 로그 추가
+		
 		}
-
 		return "orders"; // orders.html 뷰 이름 반환
 	}
 

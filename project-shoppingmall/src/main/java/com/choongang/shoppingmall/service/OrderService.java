@@ -15,7 +15,7 @@ public interface OrderService {
 	void createOrder(OrdersVO ordersVO) throws SQLException;
 	
 	// 주문 상세 작성
-	void createOrder_Complete(Order_CompleteVO orderComplete) throws SQLException;
+	void createOrderComplete(Order_CompleteVO orderComplete) throws SQLException;
 	
 	// 주문 조회
 	OrdersVO getOrderByid(int orderid) throws SQLException;
@@ -23,7 +23,9 @@ public interface OrderService {
 	// 모든 주문 목록 조회
 	List<OrdersVO> getAllOrders() throws SQLException;
 	
-	List<Order_CompleteVO> getOrderCompleteByOrderId(int orderId);
+	List<Order_CompleteVO> getOrderCompleteByOrderId(int orderId) throws SQLException;
+
+	
 
 
 	
