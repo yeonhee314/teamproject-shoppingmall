@@ -1,9 +1,11 @@
 package com.choongang.shoppingmall.controller;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.choongang.shoppingmall.service.OrderService;
+import com.choongang.shoppingmall.service.UserService;
 import com.choongang.shoppingmall.vo.Order_CompleteVO;
 import com.choongang.shoppingmall.vo.OrdersVO;
+import com.choongang.shoppingmall.vo.UserVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,9 +35,11 @@ public class OrderController {
 	@Autowired
 
 	private OrderService orderService;
+	private UserService userService;
 
-	public OrderController(OrderService orderService) {
+	public OrderController(OrderService orderService, UserService userService) {
 		this.orderService = orderService;
+		this.userService = userService;
 	}
 
 	// 주문서 작성
@@ -78,6 +84,16 @@ public class OrderController {
 		}
 	}
 
+	@GetMapping("/form")
+	public String orderForm(Model model, Principal principal) {
+		if(principal != null) {
+			// 로그인한 유저의 이름을 가져옴
+			UserVO user = userService.selectByUsername(principal.getName());
+			model.addAttribute("user", user);	// 유저 정보를 모델에 담아서 뷰로 전달
+		}
+		return "orderForm"; // 주문서 페이지로 이동
+	}
+	
 	@GetMapping("/orders.html")
 	public String showOrderPage(@RequestParam int orderId, Model model) throws SQLException {
 		log.info("주문 페이지 요청"); // 주문 페이지 요청 로그 추가

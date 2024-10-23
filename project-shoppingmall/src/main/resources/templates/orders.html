@@ -2,16 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>주문 결제 페이지</title>
+<title>주문 결제</title>
 <link rel="stylesheet" type="text/css" href="/css/styles.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <!-- jQuery -->
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+<!-- 포트원 결제 -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <!-- iamport.payment.js -->
 <script type="text/javascript"
-	src="https://cdn.iamport.kr/js/iamport.payment-{SDK-최신버전}.js"></script>
+	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <style>
 body {
 	background-color: #FFFFFF;
@@ -105,13 +106,14 @@ th, td {
 		<h2>배송지 정보</h2>
 		<div class="section">
 			<p>
-				이름: <span th:text="${user != null ? user.name : '홍길동'}">홍길동</span>
-				우편번호: <span th:text="${user != null ? user.zipcode : '01000'}">01000</span>
-				주소: <span
-					th:text="${user != null ? user.addr : '서울특별시 강남구 테헤란로 123'}">서울특별시
-					강남구 테헤란로 123</span> 상세 주소: <span
-					th:text="${user != null ? user.addr_detail : '1층'}">1층</span> 전화번호:
-				<span th:text="${user != null ? user.phone : '010-1234-5678'}">010-1234-5678</span>
+				이름: <span th:text="${user != null ? user.name : '정보 없음'}"></span>
+
+				우편번호: <span th:text="${user != null ? user.zipcode : '정보 없음'}"></span>
+
+				주소: <span th:text="${user != null ? user.addr : '정보 없음'}"></span> 상세
+				주소: <span th:text="${user != null ? user.addr_detail : '정보 없음'}"></span>
+
+				전화번호: <span th:text="${user != null ? user.phone : '정보 없음'}"></span>
 			</p>
 			<p>
 				배송 요청사항: <select id="ordermemo" name="ordermemo"
@@ -143,21 +145,7 @@ th, td {
 					</tr>
 				</thead>
 				<tbody>
-					<!-- 예시 데이터: 임의의 주문 상품 목록 -->
-					<tr>
-						<td th:text="'상품 A'">상품 A</td>
-						<td th:text="'2'">2</td>
-						<td th:text="'₩10,000'">₩10,000</td>
-						<td th:text="'₩20,000'">₩20,000</td>
-						<td th:text="'₩3,000'">₩3,000</td>
-					</tr>
-					<tr>
-						<td th:text="'상품 B'">상품 B</td>
-						<td th:text="'1'">1</td>
-						<td th:text="'₩15,000'">₩15,000</td>
-						<td th:text="'₩15,000'">₩15,000</td>
-						<td th:text="'₩3,000'">₩3,000</td>
-					</tr>
+				
 					<tr th:if="${#lists.isEmpty(orders)}">
 						<td colspan="5">주문이 없습니다.</td>
 					</tr>
@@ -181,6 +169,7 @@ th, td {
 		</div>
 
 		<!-- 결제수단 섹션 -->
+
 		<h2>결제수단</h2>
 		<div class="section">
 			<p>
@@ -197,7 +186,6 @@ th, td {
 			</p>
 			<hr>
 		</div>
-
 		<button id="paymentButton" onclick="requestPayment()">결제하기</button>
 	</div>
 
@@ -217,16 +205,16 @@ th, td {
 		    IMP.init('imp13623334'); // 가맹점 키로 초기화
 
 		    IMP.request_pay({
-		        pg: 'nice', // 'nice'로 변경
-		        pay_method: 'card',
-		        merchant_uid: `mid_${new Date().getTime()}`, // 고유 거래 ID
-		        name: '테스트 상품명', // 실제 상품명으로 변경
-		        amount: 10000, // 실제 금액으로 설정 (예: 10000원)
-		        buyer_email: 'buyer@example.com', // 구매자 이메일
-		        buyer_name: '홍길동', // 구매자 이름
-		        buyer_tel: '010-1234-5678', // 구매자 전화번호
-		        buyer_addr: '서울특별시 강남구 테헤란로 123', // 구매자 주소
-		        buyer_postcode: '12345' // 구매자 우편번호
+		        pg: 'nice_v2', // 결제 서비스
+		        pay_method: 'card', // 결제 수단
+		        merchant_uid: 'ORD20241023-0000012', // 고유 주문번호 (임의로 생성된 값)
+		        name: '블루투스 스피커', // 상품명 (예시)
+		        amount: '99000', // 결제 금액 (예시)
+		        buyer_email: 'testuser@example.com', // 구매자 이메일 (예시)
+		        buyer_name: '김철수', // 구매자 이름 (예시)
+		        buyer_tel: '010-1234-5678', // 구매자 전화번호 (예시)
+		        buyer_addr: '서울시 강남구 테헤란로 123', // 구매자 주소 (예시)
+		        buyer_postcode: '06233', // 구매자 우편번호 (예시)
 		    }, function(response) {
 		        if (response.success) {
 		            alert("결제 완료! 고유번호: " + response.imp_uid);
@@ -236,7 +224,6 @@ th, td {
 		        }
 		    });
 		}
-
 	</script>
 </body>
 </html>
